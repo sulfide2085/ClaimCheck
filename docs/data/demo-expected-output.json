@@ -1,0 +1,96 @@
+{
+  "generatedAt": "mock",
+  "result": {
+    "summary": "这个竞品的核心强卖点是防漏和单手操作，而“大型犬长途徒步适用”存在明显风险。",
+    "claims": [
+      {
+        "claim": "防漏",
+        "normalizedClaim": "leak-proof",
+        "source": ["bullet", "detail_text", "image"],
+        "verdict": "validated",
+        "confidence": "high",
+        "reasoning": "正向评论多次直接提到放在背包里不漏水，页面和评论之间有明确证据闭环。",
+        "supportingEvidence": [
+          "100% leak-proof lock design keeps your backpack dry during walks and travel.",
+          "I tossed it in my backpack for a full day trip and it never leaked."
+        ],
+        "contradictingEvidence": [
+          "The lock works, but a few drops still come out if you squeeze it hard."
+        ],
+        "operatorAdvice": "可以学习“背包不漏水”这种场景化表达，但不要轻易保留 100% 绝对化表述。",
+        "adviceTag": "learn"
+      },
+      {
+        "claim": "单手操作",
+        "normalizedClaim": "one-hand operation",
+        "source": ["bullet", "image"],
+        "verdict": "validated",
+        "confidence": "high",
+        "reasoning": "正向评论明确复现了牵狗绳时单手出水的使用场景。",
+        "supportingEvidence": [
+          "One-hand operation lets you feed water while holding the leash.",
+          "The one-hand button is very convenient when I am holding my dog's leash."
+        ],
+        "contradictingEvidence": [],
+        "operatorAdvice": "这是很适合主图和五点描述强化的卖点，可以直接学习。",
+        "adviceTag": "learn"
+      },
+      {
+        "claim": "适合大型犬长途徒步",
+        "normalizedClaim": "large dogs and long hikes",
+        "source": ["bullet"],
+        "verdict": "contradicted",
+        "confidence": "high",
+        "reasoning": "负向评论明确指出容量不足，说明页面承诺与真实体验冲突。",
+        "supportingEvidence": [],
+        "contradictingEvidence": [
+          "Large 19 oz capacity for medium and large dogs on hikes.",
+          "It is not big enough for my large golden retriever on long hikes."
+        ],
+        "operatorAdvice": "不建议直接沿用这类宽泛承诺，最好补充适用犬型或场景边界。",
+        "adviceTag": "avoid"
+      },
+      {
+        "claim": "材质安全",
+        "normalizedClaim": "safe material",
+        "source": ["bullet"],
+        "verdict": "weak_support",
+        "confidence": "medium",
+        "reasoning": "有用户提到材质和气味体验不错，但证据量不大，支撑仍偏弱。",
+        "supportingEvidence": [
+          "Food-grade BPA-free material keeps water safe and fresh.",
+          "The material feels sturdy and the water doesn't smell weird."
+        ],
+        "contradictingEvidence": [],
+        "operatorAdvice": "可以保留，但更适合作为辅助卖点而不是主卖点。",
+        "adviceTag": "cautious"
+      },
+      {
+        "claim": "通勤和车载友好",
+        "normalizedClaim": "commuting and car use",
+        "source": ["detail_text", "image"],
+        "verdict": "hidden_opportunity",
+        "confidence": "medium",
+        "reasoning": "页面提到 commuting 和 cup holders，但评论也提到了 car rides，这个场景可以被更明确强化。",
+        "supportingEvidence": [
+          "Designed for hiking, commuting, and road trips.",
+          "Great for short hikes and car rides, and my corgi drinks from it easily."
+        ],
+        "contradictingEvidence": [],
+        "operatorAdvice": "可以把“车载/通勤随身”作为更具体的使用场景补进页面表达。",
+        "adviceTag": "add_to_listing"
+      }
+    ],
+    "topLearnings": [
+      "防漏卖点有真实背包场景支撑，值得学习场景化表达。",
+      "单手操作卖点与遛狗场景强相关，适合主图强化。"
+    ],
+    "topRisks": [
+      "大型犬长途徒步适用这一表述风险高，容易被评论反驳。",
+      "100% 绝对化防漏表述建议谨慎使用。"
+    ],
+    "hiddenOpportunities": [
+      "通勤和车载使用场景值得补充强化。"
+    ]
+  }
+}

@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ClaimCheck</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./pages.css" />
+  </head>
+  <body>
+    <div class="grain"></div>
+    <main class="shell">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">ClaimCheck / GitHub Pages Demo</p>
+          <h1>让竞品分析从“看评论”升级为“用评论验证卖点”。</h1>
+          <p class="hero-text">
+            ClaimCheck 是一个面向跨境电商运营的 AI 小工具。它把竞品页面卖点、详情图表达与用户真实评论放到同一个判断链中，帮助团队快速判断哪些卖点值得学，哪些存在风险。
+          </p>
+          <div class="hero-actions">
+            <a class="primary-link" href="#preset-demo">直接看预设演示</a>
+            <a class="ghost-link" href="./assets/demo-detail-page.png" target="_blank" rel="noreferrer">查看样例详情图</a>
+          </div>
+        </div>
+        <aside class="hero-side">
+          <div class="side-card accent">
+            <span>定位</span>
+            <strong>卖点验证助手</strong>
+            <p>不是做泛化评论总结，而是做更接近运营决策的一步判断。</p>
+          </div>
+          <div class="side-card">
+            <span>输入</span>
+            <strong>Listing + 评论 + 图片</strong>
+            <p>标题、五点、详情页文案、详情图、好评和差评统一进入分析链。</p>
+          </div>
+          <div class="side-card">
+            <span>输出</span>
+            <strong>可学 / 慎学 / 不建议学</strong>
+            <p>每条结论都要求带证据，避免只给一个空判断。</p>
+          </div>
+        </aside>
+      </section>
+
+      <section class="narrative">
+        <article class="story wide">
+          <p class="section-tag">Pain Point</p>
+          <h2>真正缺的不是再多一个评论分析工具，而是判断竞品卖点真假。</h2>
+          <p>
+            很多工具可以做情绪分析、关键词统计、差评归类，但运营在真正做决策时，最关心的问题其实是：竞品页面写的卖点，到底有没有被用户真实体验支撑？
+          </p>
+        </article>
+        <article class="story">
+          <p class="section-tag">Why Now</p>
+          <h2>因为 LLM 已经能理解“承诺”和“体验”之间的对应关系。</h2>
+          <p>
+            用户不会总是原样复述页面文案，但会用真实场景描述体验。ClaimCheck 的价值就在于把这些间接证据翻译成运营能用的判断。
+          </p>
+        </article>
+      </section>
+
+      <section id="preset-demo" class="demo-section">
+        <div class="demo-heading">
+          <div>
+            <p class="section-tag">Preset Demo</p>
+            <h2>这是一套纯静态演示页，只加载预设样例。</h2>
+          </div>
+          <button id="load-preset" class="demo-button" type="button">加载预设演示</button>
+        </div>
+
+        <div class="demo-grid">
+          <section class="panel input-panel">
+            <div class="panel-title">
+              <p class="panel-kicker">Preset Input</p>
+              <h3>竞品资料</h3>
+            </div>
+            <div class="input-block">
+              <h4>商品标题</h4>
+              <p id="product-title">点击“加载预设演示”查看样例。</p>
+            </div>
+            <div class="input-block">
+              <h4>五点描述</h4>
+              <ul id="product-bullets"></ul>
+            </div>
+            <div class="input-block">
+              <h4>详情文案</h4>
+              <p id="product-detail"></p>
+            </div>
+            <div class="input-block">
+              <h4>详情图</h4>
+              <img class="demo-image" src="./assets/demo-detail-page.png" alt="ClaimCheck 样例详情图" />
+            </div>
+            <div class="review-columns">
+              <div class="input-block">
+                <h4>好评</h4>
+                <ul id="positive-reviews"></ul>
+              </div>
+              <div class="input-block">
+                <h4>差评</h4>
+                <ul id="negative-reviews"></ul>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel output-panel">
+            <div class="panel-title">
+              <p class="panel-kicker">Preset Output</p>
+              <h3>卖点验证结果</h3>
+            </div>
+            <div class="summary-card">
+              <p class="summary-label">总判断</p>
+              <h4 id="summary-text">点击按钮后显示结果。</h4>
+            </div>
+            <div class="summary-columns">
+              <article class="mini-panel">
+                <p class="mini-title">值得学习</p>
+                <ul id="learn-list"></ul>
+              </article>
+              <article class="mini-panel">
+                <p class="mini-title">风险最大</p>
+                <ul id="risk-list"></ul>
+              </article>
+              <article class="mini-panel">
+                <p class="mini-title">隐藏机会</p>
+                <ul id="opportunity-list"></ul>
+              </article>
+            </div>
+            <div id="claim-grid" class="claim-grid"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="footer-note">
+        <p class="section-tag">Takeaway</p>
+        <h2>ClaimCheck 不是一个大平台，而是一个很锋利的小功能。</h2>
+        <p>
+          它抓住了跨境运营中的真实小痛点，把“页面表达”和“用户反馈”连接起来，让 AI 从信息总结升级为决策辅助。
+        </p>
+      </section>
+    </main>
+
+    <script type="module" src="./pages.js"></script>
+  </body>
+</html>
