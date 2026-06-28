@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ClaimCheck Agent</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">ClaimCheck Agent</p>
+          <h1>用评论和详情图一起验证竞品卖点</h1>
+          <p class="hero-text">
+            这是一个本地运行的 ClaimCheck 网页前端。左侧录入竞品资料，右侧拿到卖点验证、风险提醒和可学习建议。
+          </p>
+        </div>
+        <div class="hero-panel">
+          <div class="metric">
+            <span class="metric-label">聚焦问题</span>
+            <strong>卖点到底是不是真的</strong>
+          </div>
+          <div class="metric">
+            <span class="metric-label">输入维度</span>
+            <strong>Listing + 详情图 + 评论</strong>
+          </div>
+          <div class="metric">
+            <span class="metric-label">输出方式</span>
+            <strong>证据化判断</strong>
+          </div>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <section class="panel input-panel">
+          <div class="panel-header">
+            <div>
+              <p class="section-kicker">Input</p>
+              <h2>竞品资料</h2>
+            </div>
+            <div class="header-actions">
+              <button id="load-sample" class="ghost-button" type="button">加载样例</button>
+              <button id="load-mock" class="ghost-button" type="button">预览 Mock 结果</button>
+            </div>
+          </div>
+
+          <form id="analysis-form" class="form-grid">
+            <label class="field">
+              <span>商品标题</span>
+              <textarea id="title" rows="3" placeholder="粘贴竞品标题"></textarea>
+            </label>
+
+            <label class="field">
+              <span>五点描述</span>
+              <textarea id="bullets" rows="6" placeholder="每行一个 bullet"></textarea>
+            </label>
+
+            <label class="field">
+              <span>详情文案</span>
+              <textarea id="detail-text" rows="6" placeholder="粘贴详情页文案"></textarea>
+            </label>
+
+            <label class="field">
+              <span>详情图或主图</span>
+              <input id="detail-images" type="file" accept="image/*" multiple />
+            </label>
+
+            <label class="field">
+              <span>好评</span>
+              <textarea id="positive-reviews" rows="7" placeholder="每行一条好评"></textarea>
+            </label>
+
+            <label class="field">
+              <span>差评</span>
+              <textarea id="negative-reviews" rows="7" placeholder="每行一条差评"></textarea>
+            </label>
+
+            <div class="action-row">
+              <button id="run-analysis" class="primary-button" type="submit">运行 ClaimCheck</button>
+              <p id="status" class="status-text">等待输入</p>
+            </div>
+          </form>
+        </section>
+
+        <section class="panel output-panel">
+          <div class="panel-header">
+            <div>
+              <p class="section-kicker">Output</p>
+              <h2>卖点验证结果</h2>
+            </div>
+          </div>
+
+          <div id="results" class="results-empty">
+            <p class="empty-title">还没有结果</p>
+            <p class="empty-text">可以先加载样例，或者直接粘贴一组竞品资料开始分析。</p>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <template id="claim-card-template">
+      <article class="claim-card">
+        <div class="claim-topline">
+          <div>
+            <p class="claim-name"></p>
+            <p class="claim-source"></p>
+          </div>
+          <span class="claim-badge"></span>
+        </div>
+        <p class="claim-reasoning"></p>
+        <div class="claim-grid">
+          <div>
+            <h3>支持证据</h3>
+            <ul class="evidence-list supporting"></ul>
+          </div>
+          <div>
+            <h3>反驳证据</h3>
+            <ul class="evidence-list contradicting"></ul>
+          </div>
+        </div>
+        <p class="claim-advice"></p>
+      </article>
+    </template>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>

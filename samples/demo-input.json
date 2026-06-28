@@ -1,0 +1,33 @@
+{
+  "meta": {
+    "category": "pet supplies",
+    "marketplace": "Amazon",
+    "note": "Demo input prepared for ClaimCheck Agent."
+  },
+  "product": {
+    "title": "Portable Dog Water Bottle, Leak-Proof Travel Water Dispenser for Small and Large Dogs",
+    "bullets": [
+      "100% leak-proof lock design keeps your backpack dry during walks and travel.",
+      "One-hand operation lets you feed water while holding the leash.",
+      "Large 19 oz capacity for medium and large dogs on hikes.",
+      "Food-grade BPA-free material keeps water safe and fresh."
+    ],
+    "detailText": "Designed for hiking, commuting, and road trips. The silica gel seal ring prevents leaks. Wide drinking trough makes it easy for dogs to drink quickly. Compact body fits side pockets and cup holders.",
+    "detailImages": [
+      "./assets/demo-detail-page.png"
+    ]
+  },
+  "reviews": {
+    "positive": [
+      "I tossed it in my backpack for a full day trip and it never leaked.",
+      "The one-hand button is very convenient when I am holding my dog's leash.",
+      "Great for short hikes and car rides, and my corgi drinks from it easily.",
+      "The material feels sturdy and the water doesn't smell weird."
+    ],
+    "negative": [
+      "It is not big enough for my large golden retriever on long hikes.",
+      "The lock works, but a few drops still come out if you squeeze it hard.",
+      "The bottle is portable, but the trough is a bit small for very big dogs."
+    ]
+  }
+}

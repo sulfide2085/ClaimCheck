@@ -1,0 +1,18 @@
+{
+  "name": "bailian-workshop-prep",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Aliyun Bailian workshop prep workspace.",
+  "scripts": {
+    "auth:status": "bl auth status",
+    "workspace:list": "bl workspace list --output json",
+    "test:ping": "bl text chat --message \"请只回复pong\" --max-tokens 16 --output json --non-interactive",
+    "sample:image": "python scripts/generate_demo_detail_image.py",
+    "claimcheck:demo": "node src/claimcheck-agent.js --input ./samples/demo-input.json --output ./out/claimcheck-demo-result.json",
+    "web:start": "node src/web-server.js"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
