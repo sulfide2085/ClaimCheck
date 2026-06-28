@@ -61,10 +61,13 @@
               <textarea id="detail-text" rows="6" placeholder="粘贴详情页文案"></textarea>
             </label>
 
-            <label class="field">
+            <div class="field">
               <span>详情图或主图</span>
               <input id="detail-images" type="file" accept="image/*" multiple />
-            </label>
+              <div id="image-preview" class="image-preview empty">
+                <p class="preview-empty">上传后的图片会显示在这里，方便你确认本次送审的图片内容。</p>
+              </div>
+            </div>
 
             <label class="field">
               <span>好评</span>

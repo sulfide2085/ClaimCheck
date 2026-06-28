@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ClaimCheck Roadshow</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/roadshow.css" />
+  </head>
+  <body>
+    <div class="noise"></div>
+    <main class="roadshow-shell">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">ClaimCheck / Roadshow</p>
+          <h1>不是再做一个评论分析工具，而是用评论验证卖点。</h1>
+          <p class="hero-lead">
+            ClaimCheck 把竞品页面的卖点承诺、详情图表达和用户真实反馈放到同一个判断链里，直接回答运营最关心的问题：这个卖点到底值不值得学。
+          </p>
+          <div class="hero-actions">
+            <a class="primary-link" href="/">打开工具页</a>
+            <a class="ghost-link" href="/samples/assets/demo-detail-page.png" target="_blank" rel="noreferrer">查看样例详情图</a>
+          </div>
+        </div>
+
+        <aside class="hero-panel">
+          <div class="metric-card accent">
+            <span>核心动作</span>
+            <strong>卖点验证</strong>
+            <p>不是只总结评论，而是判断卖点有没有被真实体验支撑。</p>
+          </div>
+          <div class="metric-card">
+            <span>输入</span>
+            <strong>Listing + 评论 + 图片</strong>
+            <p>标题、五点、详情文案、详情图、好评和差评一起看。</p>
+          </div>
+          <div class="metric-card">
+            <span>输出</span>
+            <strong>可学 / 慎学 / 不建议学</strong>
+            <p>每个判断都要求能回溯到具体证据，而不是只给结论。</p>
+          </div>
+        </aside>
+      </section>
+
+      <section class="story-grid">
+        <article class="story-card large">
+          <p class="section-tag">Pain Point</p>
+          <h2>运营并不缺“评论总结”，真正缺的是“卖点真假判断”。</h2>
+          <p>
+            现在很多工具能统计高频词、做情绪分析、归纳好评差评，但运营真正要做决策的时候，问题并不是“用户说了什么”，而是“竞品页面强调的东西，到底有没有被用户买账”。
+          </p>
+        </article>
+
+        <article class="story-card">
+          <p class="section-tag">Why Now</p>
+          <h2>LLM 终于能理解“承诺”和“体验”之间的对应关系。</h2>
+          <p>
+            用户不一定会直接说“这个很防漏”，他更可能说“我丢包里一天也没洒”。ClaimCheck 把这种间接证据也纳入判断，而不是停留在关键词匹配。
+          </p>
+        </article>
+
+        <article class="story-card image-card">
+          <img src="/samples/assets/demo-detail-page.png" alt="ClaimCheck 样例详情图" />
+          <div class="image-caption">
+            <p class="section-tag">Image Proof</p>
+            <h2>很多卖点其实藏在详情图里。</h2>
+            <p>所以 ClaimCheck 不只看文案，也把详情图里的卖点表达纳入验证。</p>
+          </div>
+        </article>
+      </section>
+
+      <section class="split-section">
+        <div class="section-copy">
+          <p class="section-tag">Workflow</p>
+          <h2>一条很短的链路，解决一个很具体的判断动作。</h2>
+        </div>
+        <div class="workflow-rail">
+          <div class="workflow-step">
+            <span>01</span>
+            <h3>抽取页面卖点</h3>
+            <p>从标题、五点、详情文案、详情图中提取竞品承诺。</p>
+          </div>
+          <div class="workflow-step">
+            <span>02</span>
+            <h3>匹配评论证据</h3>
+            <p>找出支持、反驳或补充这些卖点的真实评论片段。</p>
+          </div>
+          <div class="workflow-step">
+            <span>03</span>
+            <h3>输出运营建议</h3>
+            <p>告诉团队什么值得学，什么要谨慎学，什么不要直接抄。</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="proof-board">
+        <div class="proof-heading">
+          <p class="section-tag">Live Proof</p>
+          <h2>样例结果不是空话，会直接落成可读结论。</h2>
+          <p>下面这些内容会从当前项目里的 mock 结果自动读取，保证路演页面和演示数据保持一致。</p>
+        </div>
+
+        <div class="proof-layout">
+          <div class="proof-summary">
+            <p class="summary-label">总判断</p>
+            <h3 id="summary-text">正在加载结果...</h3>
+          </div>
+          <div class="proof-lists">
+            <article class="proof-column">
+              <p class="list-title">最值得学习</p>
+              <ul id="learn-list"></ul>
+            </article>
+            <article class="proof-column">
+              <p class="list-title">最大风险</p>
+              <ul id="risk-list"></ul>
+            </article>
+            <article class="proof-column">
+              <p class="list-title">隐藏机会</p>
+              <ul id="opportunity-list"></ul>
+            </article>
+          </div>
+        </div>
+
+        <div id="claim-glimpse" class="claim-glimpse"></div>
+      </section>
+
+      <section class="closing-grid">
+        <article class="closing-card dark">
+          <p class="section-tag">Positioning</p>
+          <h2>这不是平台，而是一个很锋利的小功能。</h2>
+          <p>
+            ClaimCheck 不尝试一次性吃掉选品、投放、客服、库存等复杂流程。它先抓住一个小切口，把“卖点真假判断”做深，先把价值跑出来。
+          </p>
+        </article>
+
+        <article class="closing-card">
+          <p class="section-tag">Takeaway</p>
+          <h2>一句话总结</h2>
+          <p>
+            ClaimCheck 是一个用真实评论去验证竞品卖点的 AI 工具，帮助运营从“看评论”升级到“用评论判断什么值得学”。
+          </p>
+          <a class="inline-link" href="/">现在就回到工具页继续演示</a>
+        </article>
+      </section>
+    </main>
+
+    <script type="module" src="/roadshow.js"></script>
+  </body>
+</html>

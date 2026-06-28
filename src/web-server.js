@@ -18,6 +18,7 @@ const HOST = "127.0.0.1";
 const PORT = Number(process.env.PORT || 3210);
 const ROOT = process.cwd();
 const PUBLIC_DIR = resolve(ROOT, "web");
+const SAMPLES_DIR = resolve(ROOT, "samples");
 const SAMPLE_INPUT_PATH = resolve(ROOT, "samples/demo-input.json");
 const SAMPLE_RESULT_PATH = resolve(ROOT, "samples/demo-expected-output.json");
 
@@ -127,8 +128,12 @@ async function handleAnalyze(request, response) {
 
 async function handleStatic(pathname, response) {
   const relativePath = pathname === "/" ? "index.html" : pathname.slice(1);
-  const filePath = resolve(PUBLIC_DIR, relativePath);
-  if (!filePath.startsWith(PUBLIC_DIR)) {
+  return serveFile(PUBLIC_DIR, relativePath, response);
+}
+
+async function serveFile(baseDir, relativePath, response) {
+  const filePath = resolve(baseDir, relativePath);
+  if (!filePath.startsWith(baseDir)) {
     sendText(response, 403, "Forbidden");
     return;
   }
@@ -164,6 +169,11 @@ const server = createServer(async (request, response) => {
   if (request.method === "GET" && url.pathname === "/api/mock-result") {
     const payload = await readJson(SAMPLE_RESULT_PATH);
     sendJson(response, 200, payload);
+    return;
+  }
+
+  if (request.method === "GET" && url.pathname.startsWith("/samples/")) {
+    await serveFile(SAMPLES_DIR, url.pathname.slice("/samples/".length), response);
     return;
   }
 

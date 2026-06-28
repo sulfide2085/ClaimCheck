@@ -3,6 +3,7 @@ import { isAbsolute, resolve } from "node:path";
 
 import { omniJson, textJson } from "./bl-client.js";
 import {
+  buildFastAnalysisPrompt,
   buildFinalAnalysisPrompt,
   buildImageClaimPrompt,
   buildTextClaimExtractionPrompt,
@@ -39,8 +40,9 @@ export async function extractTextClaims(input, cwd) {
   const result = await textJson({
     cwd,
     system: MODEL_LANGUAGE_SYSTEM,
+    model: "qwen-plus",
     messages: [{ role: "user", content: buildTextClaimExtractionPrompt(input) }],
-    maxTokens: 2048,
+    maxTokens: 1200,
     temperature: 0.1,
   });
 
@@ -76,15 +78,45 @@ export async function runFinalAnalysis(input, textClaims, imageClaims, cwd) {
   return textJson({
     cwd,
     system: MODEL_LANGUAGE_SYSTEM,
+    model: "qwen-plus",
     messages: [
       {
         role: "user",
         content: buildFinalAnalysisPrompt(input, textClaims, imageClaims),
       },
     ],
-    maxTokens: 4096,
+    maxTokens: 1800,
     temperature: 0.2,
   });
+}
+
+export async function runFastTextOnlyAnalysis(input, cwd) {
+  const messages = [
+    {
+      role: "user",
+      content: buildFastAnalysisPrompt(input),
+    },
+  ];
+
+  try {
+    return await textJson({
+      cwd,
+      system: MODEL_LANGUAGE_SYSTEM,
+      model: "qwen-turbo",
+      messages,
+      maxTokens: 1200,
+      temperature: 0.1,
+    });
+  } catch (error) {
+    return textJson({
+      cwd,
+      system: MODEL_LANGUAGE_SYSTEM,
+      model: "qwen-plus",
+      messages,
+      maxTokens: 1200,
+      temperature: 0.1,
+    });
+  }
 }
 
 export async function runClaimCheck({
@@ -92,6 +124,20 @@ export async function runClaimCheck({
   cwd = process.cwd(),
   skipImages = false,
 }) {
+  if (skipImages || input.product.detailImages.length === 0) {
+    const result = await runFastTextOnlyAnalysis(input, cwd);
+    return {
+      generatedAt: new Date().toISOString(),
+      input,
+      intermediate: {
+        textClaims: { claims: [], skipped: true },
+        imageClaims: { claims: [], skipped: true, warning: null },
+      },
+      warnings: [],
+      result,
+    };
+  }
+
   const warnings = [];
   const textClaims = await extractTextClaims(input, cwd);
 

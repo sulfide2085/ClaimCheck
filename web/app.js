@@ -4,9 +4,7 @@ const loadSampleButton = document.querySelector("#load-sample");
 const loadMockButton = document.querySelector("#load-mock");
 const resultsRoot = document.querySelector("#results");
 const template = document.querySelector("#claim-card-template");
-const viewState = {
-  sampleDetailImages: [],
-};
+const imagePreview = document.querySelector("#image-preview");
 
 const fields = {
   title: document.querySelector("#title"),
@@ -15,6 +13,11 @@ const fields = {
   detailImages: document.querySelector("#detail-images"),
   positiveReviews: document.querySelector("#positive-reviews"),
   negativeReviews: document.querySelector("#negative-reviews"),
+};
+
+const state = {
+  previewUrls: [],
+  sampleImageUrls: [],
 };
 
 const verdictLabels = {
@@ -34,6 +37,72 @@ function linesToArray(text) {
 function setStatus(message, type = "idle") {
   statusText.textContent = message;
   statusText.dataset.state = type;
+}
+
+function clearPreviewUrls() {
+  for (const url of state.previewUrls) {
+    if (url.startsWith("blob:")) {
+      URL.revokeObjectURL(url);
+    }
+  }
+  state.previewUrls = [];
+}
+
+function renderPreviewCards(urls, sourceLabel) {
+  imagePreview.className = "image-preview";
+  imagePreview.innerHTML = "";
+
+  for (const [index, url] of urls.entries()) {
+    const card = document.createElement("figure");
+    card.className = "preview-card";
+
+    const img = document.createElement("img");
+    img.src = url;
+    img.alt = `${sourceLabel}${index + 1}`;
+    img.loading = "lazy";
+
+    const caption = document.createElement("figcaption");
+    caption.textContent = `${sourceLabel}${index + 1}`;
+
+    card.appendChild(img);
+    card.appendChild(caption);
+    imagePreview.appendChild(card);
+  }
+}
+
+function showEmptyPreview(message) {
+  imagePreview.className = "image-preview empty";
+  imagePreview.innerHTML = `<p class="preview-empty">${message}</p>`;
+}
+
+function updatePreviewFromFiles() {
+  clearPreviewUrls();
+  state.sampleImageUrls = [];
+
+  const files = Array.from(fields.detailImages.files || []);
+  if (files.length === 0) {
+    showEmptyPreview("上传后的图片会显示在这里，方便你确认本次送审的图片内容。");
+    return;
+  }
+
+  state.previewUrls = files.map((file) => URL.createObjectURL(file));
+  renderPreviewCards(state.previewUrls, "上传图片 ");
+}
+
+function renderSamplePreview(detailImages = []) {
+  clearPreviewUrls();
+  state.sampleImageUrls = detailImages.map((path) =>
+    path.startsWith("/samples/")
+      ? path
+      : `/samples/${path.replace(/^\.?\/*/, "")}`,
+  );
+
+  if (state.sampleImageUrls.length === 0) {
+    showEmptyPreview("当前没有样例图片。");
+    return;
+  }
+
+  renderPreviewCards(state.sampleImageUrls, "样例图片 ");
 }
 
 async function fileToDataUrl(file) {
@@ -64,7 +133,6 @@ async function collectFormPayload() {
       bullets: linesToArray(fields.bullets.value),
       detailText: fields.detailText.value.trim(),
       uploadedImages,
-      detailImagePaths: uploadedImages.length === 0 ? viewState.sampleDetailImages : [],
     },
     reviews: {
       positive: linesToArray(fields.positiveReviews.value),
@@ -80,7 +148,7 @@ function fillForm(sample) {
   fields.positiveReviews.value = (sample.reviews?.positive || []).join("\n");
   fields.negativeReviews.value = (sample.reviews?.negative || []).join("\n");
   fields.detailImages.value = "";
-  viewState.sampleDetailImages = sample.product?.detailImages || [];
+  renderSamplePreview(sample.product?.detailImages || []);
 }
 
 function renderList(title, items) {
@@ -115,15 +183,20 @@ function renderClaimCard(claim) {
     : claim.source
       ? [claim.source]
       : [];
-  fragment.querySelector(".claim-name").textContent = claim.claim || claim.normalizedClaim || "未命名卖点";
-  fragment.querySelector(".claim-source").textContent = `来源：${sources.join(" / ") || "未标注"} · 置信度：${claim.confidence || "unknown"}`;
+
+  fragment.querySelector(".claim-name").textContent =
+    claim.claim || claim.normalizedClaim || "未命名卖点";
+  fragment.querySelector(".claim-source").textContent =
+    `来源：${sources.join(" / ") || "未标注"} · 置信度：${claim.confidence || "unknown"}`;
 
   const badge = fragment.querySelector(".claim-badge");
   badge.textContent = verdictLabels[claim.verdict] || claim.verdict || "未分类";
   badge.classList.add(`badge-${claim.verdict}`);
 
-  fragment.querySelector(".claim-reasoning").textContent = claim.reasoning || "未返回判断说明。";
-  fragment.querySelector(".claim-advice").textContent = `运营建议：${claim.operatorAdvice || "暂无"}`;
+  fragment.querySelector(".claim-reasoning").textContent =
+    claim.reasoning || "未返回判断说明。";
+  fragment.querySelector(".claim-advice").textContent =
+    `运营建议：${claim.operatorAdvice || "暂无"}`;
 
   const supporting = fragment.querySelector(".supporting");
   const contradicting = fragment.querySelector(".contradicting");
@@ -241,7 +314,7 @@ async function fetchJson(url) {
   return response.json();
 }
 
-async function postJson(url, payload, timeoutMs = 120000) {
+async function postJson(url, payload, timeoutMs = 60000) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
 
@@ -271,9 +344,13 @@ async function postJson(url, payload, timeoutMs = 120000) {
   }
 }
 
+fields.detailImages.addEventListener("change", () => {
+  updatePreviewFromFiles();
+});
+
 loadSampleButton.addEventListener("click", async () => {
   setBusy(true);
-  setStatus("正在加载样例...");
+  setStatus("正在加载样例...", "loading");
   try {
     const sample = await fetchJson("/api/sample");
     fillForm(sample);
@@ -287,7 +364,7 @@ loadSampleButton.addEventListener("click", async () => {
 
 loadMockButton.addEventListener("click", async () => {
   setBusy(true);
-  setStatus("正在载入 Mock 结果...");
+  setStatus("正在载入 Mock 结果...", "loading");
   try {
     const payload = await fetchJson("/api/mock-result");
     renderResult(payload);
@@ -316,3 +393,5 @@ form.addEventListener("submit", async (event) => {
     setBusy(false);
   }
 });
+
+showEmptyPreview("上传后的图片会显示在这里，方便你确认本次送审的图片内容。");

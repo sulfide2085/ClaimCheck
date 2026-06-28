@@ -150,6 +150,49 @@ body {
   font-weight: 600;
 }
 
+.image-preview {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 12px;
+  border: 1px dashed rgba(53, 86, 74, 0.2);
+  border-radius: 18px;
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.image-preview.empty {
+  display: block;
+}
+
+.preview-empty {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.7;
+  font-size: 13px;
+}
+
+.preview-card {
+  margin: 0;
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(29, 42, 47, 0.08);
+}
+
+.preview-card img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  background: #efe7db;
+}
+
+.preview-card figcaption {
+  padding: 10px 12px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
 textarea,
 input[type="file"] {
   width: 100%;
